@@ -13,6 +13,6 @@
     });
 
     socket.on('tweet', function( tweet ) {
-        $( '#tweet-wall' ).html( '<p>' + tweet.text + '</p>' );
+        $( '#tweet-wall' ).append( '<p>' + tweet.text + '</p>' );
     });
 </script>

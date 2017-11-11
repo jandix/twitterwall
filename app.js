@@ -26,6 +26,15 @@ var client = new Twitter({
     access_token_secret: 'RZiuaiUPe3U0R7qVsSFAeKQpwV5CNohNFeFCGTsNGlYPz'
 });
 
+
+
+
+// wall
+app.get('/', (req, res) => res.status(200).render('wall'));
+
+// 404
+app.use('*', (req, res) => res.status(200).render('error404'));
+
 io.on('connection', function(client) {
     console.log('Client connected...');
 
@@ -44,12 +53,5 @@ io.on('connection', function(client) {
     });
 });
 
-
-
-// wall
-app.get('/', (req, res) => res.status(200).render('wall'));
-
-// 404
-app.use('*', (req, res) => res.status(200).render('error404'));
 
 server.listen( app.get('port') );

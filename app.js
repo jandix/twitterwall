@@ -19,7 +19,7 @@ app.set('port', 8080);
 
 app.use(express.static(__dirname + '/node_modules'));
 
-var client = new Twitter({
+var twitter = new Twitter({
     consumer_key: 'W6HSyXNXsWk9rq3SjNAtlBZuO',
     consumer_secret: 'mGG5ezQ6cNM6wfXQj1w9DGQV5lJzQLVL8Tf1CFpbb31ZQkK4Rv',
     access_token_key: '3372623884-iqa73dotaZgHB7q8twAfIvxHgf0CC211fQcDmKg',
@@ -40,13 +40,13 @@ io.on('connection', function(client) {
 
     client.on('join', function (data) {
         console.log(data);
-        client.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'}, function (stream) {
-            stream.on('data', function (tweet) {
+        twitter.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'}, function (stream) {
+            twitter.on('data', function (tweet) {
                 console.log(tweet);
                 client.emit('tweet', tweet);
             });
 
-            stream.on('error', function (error) {
+            twitter.on('error', function (error) {
                 console.log(error);
             });
         });

@@ -29,19 +29,20 @@ var client = new Twitter({
 io.on('connection', function(client) {
     console.log('Client connected...');
 
-    client.on('join', function(data) {
+    client.on('join', function (data) {
         console.log(data);
-        client.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'},  function(stream) {
-            stream.on('data', function(tweet) {
+        client.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'}, function (stream) {
+            stream.on('data', function (tweet) {
                 console.log(tweet);
                 client.emit('tweet', tweet);
             });
 
-            stream.on('error', function(error) {
+            stream.on('error', function (error) {
                 console.log(error);
             });
         });
     });
+}
 
 
 

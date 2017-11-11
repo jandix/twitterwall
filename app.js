@@ -1,8 +1,17 @@
 const express = require('express');
+const handlebars = require('express-handlebars')
+    .create({defaultLayout: 'main'});
+
 
 var app = express();
 
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+
 app.set('port', 8080);
+
+
+
 
 // wall
 app.get('/', (req, res) => res.status(200).render('wall'));

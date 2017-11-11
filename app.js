@@ -1,11 +1,11 @@
 const express = require('express');
-const handlebars = require('express-handlebars')
-    .create({defaultLayout: 'main'});
+const handlebars = require('express-handlebars');
 const Twitter = require('twitter');
 
 var app = express();
 
-app.engine('handlebars', handlebars.engine);
+
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.set('port', 8080);

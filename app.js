@@ -26,19 +26,23 @@ var client = new Twitter({
     access_token_secret: 'RZiuaiUPe3U0R7qVsSFAeKQpwV5CNohNFeFCGTsNGlYPz'
 });
 
-/**
- * Stream statuses filtered by keyword
- * number of tweets per second depends on topic popularity
- **/
-client.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'},  function(stream) {
-    stream.on('data', function(tweet) {
-        console.log(tweet);
+io.on('connection', function(client) {
+    console.log('Client connected...');
+
+    client.on('join', function(data) {
+        console.log(data);
+        client.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'},  function(stream) {
+            stream.on('data', function(tweet) {
+                console.log(tweet);
+                client.emit('tweet', tweet);
+            });
+
+            stream.on('error', function(error) {
+                console.log(error);
+            });
+        });
     });
 
-    stream.on('error', function(error) {
-        console.log(error);
-    });
-});
 
 
 // wall

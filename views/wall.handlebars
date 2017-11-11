@@ -1,4 +1,17 @@
 <h1>This will be the wall.</h1>
 
+<div id="tweet-wall"></div>
+
 <script src="/jquery/dist/jquery.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+
+<script>
+    var socket = io.connect('http://http://132.230.224.205/');
+    socket.on('connect', function(data) {
+        socket.emit('join', 'Connected.');
+    });
+
+    socket.on('tweet', function( tweet ) {
+        $( '#tweet-wall' ).html( '<p>' + tweet.text + '</p>' );
+    });
+</script>

@@ -28,6 +28,12 @@ var twitter = new Twitter({
 
 
 
+/**
+ * Stream statuses filtered by keyword
+ * number of tweets per second depends on topic popularity
+ **/
+
+
 
 // wall
 app.get('/', (req, res) => res.status(200).render('wall'));
@@ -35,23 +41,24 @@ app.get('/', (req, res) => res.status(200).render('wall'));
 // 404
 app.use('*', (req, res) => res.status(200).render('error404'));
 
+
 io.on('connection', function(client) {
     console.log('Client connected...');
 
     client.on('join', function (data) {
         console.log(data);
-        twitter.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'}, function (stream) {
-            twitter.on('data', function (tweet) {
+        twitter.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'},  function(stream) {
+            stream.on('data', function(tweet) {
                 console.log(tweet);
                 client.emit('tweet', tweet);
             });
 
-            twitter.on('error', function (error) {
+            stream.on('error', function(error) {
                 console.log(error);
             });
         });
     });
-});
 
+});
 
 server.listen( app.get('port') );

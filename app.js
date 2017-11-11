@@ -5,6 +5,9 @@ const Twitter = require('twitter');
 
 var app = express();
 
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -14,6 +17,7 @@ app.set('view engine', 'handlebars');
 app.set('port', 8080);
 
 
+app.use(express.static(__dirname + '/node_modules'));
 
 var client = new Twitter({
     consumer_key: 'W6HSyXNXsWk9rq3SjNAtlBZuO',
@@ -43,6 +47,4 @@ app.get('/', (req, res) => res.status(200).render('wall'));
 // 404
 app.use('*', (req, res) => res.status(200).render('error404'));
 
-app.listen(app.get('port'), function () {
-   console.log( 'Twitter Wall was started.; Press Ctrl-C to terminate.' );
-});
+server.listen( app.get('port') );

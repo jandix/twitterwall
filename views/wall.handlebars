@@ -13,6 +13,6 @@
     });
 
     socket.on('tweet', function( tweet ) {
-        $( '#tweet-wall' ).prepend( '<p>' + tweet.text + '</p>' );
+        $( '#tweet-wall' ).prepend( '<h4>' + tweet.text + '</h4><p>' + tweet.user.screen_name + ' ' + new Date(tweet.created_at).toLocaleTimeString() );
     });
 </script>

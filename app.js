@@ -47,7 +47,7 @@ io.on('connection', function(client) {
 
     client.on('join', function (data) {
         console.log(data);
-        twitter.stream('statuses/filter', {track: '#rstats, #typischerBundesligaSamstag'},  function(stream) {
+        twitter.stream('statuses/filter', {track: '#rstats'},  function(stream) {
             stream.on('data', function(tweet) {
                 console.log(tweet);
                 client.emit('tweet', tweet);

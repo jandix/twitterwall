@@ -6,8 +6,9 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-    var socket = io.connect('http://http://132.230.224.205/');
+    var socket = io.connect('http://http://132.230.224.205');
     socket.on('connect', function(data) {
+        console.log('Connected.');
         socket.emit('join', 'Connected.');
     });
 

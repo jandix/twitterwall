@@ -52,3 +52,5 @@ io.on('connection', function(client) {
     });
 
 });
+
+server.listen(port);

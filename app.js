@@ -17,7 +17,9 @@ app.set('view engine', 'handlebars');
 app.set('port', 8080);
 
 
-app.use(express.static(__dirname + '/node_modules'));
+app.use("/static", express.static(__dirname + "/static"));
+app.use("/", express.static(__dirname + '/node_modules'));
+
 
 var twitter = new Twitter({
     consumer_key: 'W6HSyXNXsWk9rq3SjNAtlBZuO',

@@ -5,14 +5,4 @@
 <script src="/jquery/dist/jquery.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 
-<script>
-    var socket = io.connect('http://132.230.224.205');
-    socket.on('connect', function(data) {
-        console.log('Connected.');
-        socket.emit('join', 'Connected.');
-    });
-
-    socket.on('tweet', function( tweet ) {
-        $( '#tweet-wall' ).prepend( '<h4>' + tweet.text + '</h4><p>' + tweet.user.screen_name + ' ' + new Date(tweet.created_at).toLocaleTimeString() );
-    });
-</script>
+<script src="/static/js/twitterwall.js"></script>

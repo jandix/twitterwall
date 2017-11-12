@@ -53,7 +53,6 @@ io.on('connection', function(client) {
     client.on('join', function (data) {
         console.log(data);
         stream.on('data', function(event) {
-            console.log(event && event.text);
             client.emit('tweet', event);
         });
 

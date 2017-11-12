@@ -3,6 +3,7 @@
     License: MIT
  */
 
+var i = 0;
 
 
 var socket = io.connect('http://wall.correlaid.org');
@@ -12,6 +13,12 @@ socket.on('connect', function(data) {
 });
 
 socket.on('tweet', function( tweet ) {
+
+    if (i < 1) {
+        console.log( tweet );
+    }
+
+    i++;
 
     var tweetItem = '<div class="tweet">';
     tweetItem += '<div class="row">';

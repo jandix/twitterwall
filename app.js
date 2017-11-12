@@ -2,10 +2,13 @@ const path = require('path');
 const express = require('express');
 const handlebars = require('express-handlebars');
 const Twitter = require('twitter');
+const http = require('http');
 
 var app = express();
-
-
+const port = parseInt(process.env.PORT, 10) || 8080;
+app.set('port', port);
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 
 
 app.set('views', path.join(__dirname, 'views'));

@@ -9,6 +9,7 @@ var i = 0;
 var socket = io.connect('http://wall.correlaid.org');
 socket.on('connect', function(data) {
     console.log('Connected to server.');
+    socket.emit('join', 'Connected.');
 });
 
 socket.on('tweet', function( tweet ) {

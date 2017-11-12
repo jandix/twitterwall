@@ -15,10 +15,5 @@
 
 .tweet {
     background-color: white;
-    border: 1px solid #00aced;
     padding: 30px;
-}
-
-.tweet p {
-    margin-top: 5px;
 }

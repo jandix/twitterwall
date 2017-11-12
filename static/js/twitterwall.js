@@ -27,7 +27,7 @@ socket.on('tweet', function( tweet ) {
     tweetItem += '</div>';
     tweetItem += '<div class="col-10">';
     tweetItem += '<p style="margin: 0;"><b>' + tweet.user.screen_name + '</b></p>';
-    tweetItem += '<p style="margin:0; margin-top: 5px;">' + new Date(tweet.created_at).toLocaleDateString() +  ' ' +  new Date(tweet.created_at).toLocaleTimeString() + '</p>';
+    tweetItem += '<p style="margin:0; margin-top: 2px;">' + new Date(tweet.created_at).toLocaleDateString() +  ' ' +  new Date(tweet.created_at).toLocaleTimeString() + '</p>';
     tweetItem += '</div>';
     tweetItem += '</div>';
     tweetItem += '<div class="row">';

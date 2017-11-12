@@ -42,20 +42,21 @@ app.get('/', (req, res) => res.status(200).render('wall'));
 app.use('*', (req, res) => res.status(200).render('error404'));
 
 
+
+var stream = twitter.stream('statuses/filter', {track: '#rstats, nodejs, jsvascript, #dataviz, #datavis'});
+
 io.on('connection', function(client) {
     console.log('Client connected...');
 
     client.on('join', function (data) {
         console.log(data);
-        twitter.stream('statuses/filter', {track: '#rstats'},  function(stream) {
-            stream.on('data', function(tweet) {
-                console.log(tweet);
-                client.emit('tweet', tweet);
-            });
+        stream.on('data', function(event) {
+            console.log(event && event.text);
+            client.emit('tweet', event);
+        });
 
-            stream.on('error', function(error) {
-                console.log(error);
-            });
+        stream.on('error', function(error) {
+            throw error;
         });
     });
 

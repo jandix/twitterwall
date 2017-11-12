@@ -5,7 +5,7 @@ const Twitter = require('twitter');
 
 var app = express();
 
-const io = require('socket.io')(server);
+
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -23,15 +23,6 @@ var twitter = new Twitter({
     access_token_key: '3372623884-iqa73dotaZgHB7q8twAfIvxHgf0CC211fQcDmKg',
     access_token_secret: 'RZiuaiUPe3U0R7qVsSFAeKQpwV5CNohNFeFCGTsNGlYPz'
 });
-
-
-
-/**
- * Stream statuses filtered by keyword
- * number of tweets per second depends on topic popularity
- **/
-
-
 
 // wall
 app.get('/', (req, res) => res.status(200).render('wall'));

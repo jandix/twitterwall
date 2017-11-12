@@ -53,9 +53,7 @@ io.on('connection', function(client) {
     client.on('join', function (data) {
         console.log(data);
         stream.on('data', function(event) {
-            if ( !event.retweeted_status ) {
-                client.emit('tweet', event);
-            }
+            client.emit('tweet', event);
         });
 
         stream.on('error', function(error) {

@@ -40,3 +40,9 @@ p, h5 {
     background-color: white;
     padding: 30px;
 }
+
+@media only screen and (max-width: 767px) {
+    .mobile {
+        display: none;
+    }
+}

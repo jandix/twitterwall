@@ -5,7 +5,6 @@ const Twitter = require('twitter');
 
 var app = express();
 
-const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 
@@ -13,9 +12,6 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
-
-app.set('port', 8080);
-
 
 app.use("/static", express.static(__dirname + "/static"));
 app.use("/", express.static(__dirname + '/node_modules'));
@@ -62,5 +58,3 @@ io.on('connection', function(client) {
     });
 
 });
-
-server.listen( app.get('port') );

@@ -1,3 +1,10 @@
+/*
+    Author: Jan Dix (dix.jan@gmx.de)
+    License: MIT
+ */
+
+
+
 var socket = io.connect('http://wall.correlaid.org');
 socket.on('connect', function(data) {
     console.log('Connected.');
@@ -5,5 +12,24 @@ socket.on('connect', function(data) {
 });
 
 socket.on('tweet', function( tweet ) {
-    $( '#tweet-wall' ).prepend( '<h4>' + tweet.text + '</h4><p>' + tweet.user.screen_name + ' ' + new Date(tweet.created_at).toLocaleTimeString() );
+
+    var tweetItem = '<div class="tweet">';
+    tweetItem += '<div class="row">';
+    tweetItem += '<div class="col-4">';
+    tweetItem += '<img src="' + tweet.user.profile_image_url + '" class="img-fluid"/>';
+    tweetItem += '</div>';
+    tweetItem += '<div class="col-8>';
+    tweetItem += '<p><b>' + tweet.user.screen_name + '</b></p>';
+    tweetItem += '<p>' + new Date(tweet.created_at).toLocaleDateString() +  ' ' +  new Date(tweet.created_at).toLocaleTimeString() + '</p>';
+    tweetItem += '</div>';
+    tweetItem += '</div>';
+    tweetItem += '<div class="row">';
+    tweetItem += '<div class="col-12">';
+    tweetItem += '<h5>' + tweet.text + '</h5>';
+    tweetItem += '</div>';
+    tweetItem += '</div>';
+    tweetItem += '</div>';
+
+    $( '#tweet-wall' ).prepend( tweetItem );
+
 });

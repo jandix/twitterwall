@@ -1,0 +1,20 @@
+/*
+    Author: Jan Dix (dix.jan@gmx.de)
+    License: MIT
+ */
+
+.tweet {
+    width: 400px;
+    float: left;
+    display: inline-block;
+    position: relative;
+    background-color: white;
+    border: 1px solid #00aced;
+    padding: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+    .tweet {
+        width: 100%;
+    }
+}

@@ -45,7 +45,7 @@ app.use('*', (req, res) => res.status(200).render('error404'));
 
 
 
-var stream = twitter.stream('statuses/filter', {track: '#rstats, nodejs, jsvascript, #dataviz, #datavis, #DataScience, #Developer, #tidyverse, #rladies'});
+var stream = twitter.stream('statuses/filter', {track: '#rstats, #dataviz, #datavis, #DataScience, #tidyverse, #rladies'});
 
 io.on('connection', function(client) {
     console.log('Client connected...');

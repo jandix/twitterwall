@@ -20,7 +20,7 @@ socket.on('tweet', function( tweet ) {
 
     i++;
 
-    var tweetItem = '<div class="tweet">';
+    var tweetItem = '<div class="tweet col-12 col-md-4">';
     tweetItem += '<div class="row">';
     tweetItem += '<div class="col-4">';
     tweetItem += '<img src="' + tweet.user.profile_image_url + '" class="img-fluid"/>';

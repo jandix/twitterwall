@@ -8,17 +8,10 @@ var i = 0;
 
 var socket = io.connect('http://wall.correlaid.org');
 socket.on('connect', function(data) {
-    console.log('Connected.');
-    socket.emit('join', 'Connected.');
+    console.log('Connected to server.');
 });
 
 socket.on('tweet', function( tweet ) {
-
-    if (i < 1) {
-        console.log( tweet );
-    }
-
-    i++;
 
     var tweetItem = '<div class="tweet col-12 col-md-4 text-left">';
     tweetItem += '<div class="row">';

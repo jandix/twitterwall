@@ -1,25 +1,15 @@
-const path = require('path');
-const express = require('express');
-const handlebars = require('express-handlebars');
-const Twitter = require('twitter');
-const http = require('http');
+// load modules
+const path = require('path'); // define realtive paths
+const express = require('express'); // express framework
+const handlebars = require('express-handlebars'); // handlebar views
+const Twitter = require('twitter'); // twitter api
+const http = require('http'); // http module
 
-var app = express();
-const port = parseInt(process.env.PORT, 10) || 8080;
-app.set('port', port);
-const server = http.createServer(app);
-const io = require('socket.io')(server);
+// set constants
+const port = parseInt(process.env.PORT, 10) || 8080; // set port
 
-
-app.set('views', path.join(__dirname, 'views'));
-
-app.engine('handlebars', handlebars({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
-
-app.use("/static", express.static(__dirname + "/static"));
-app.use("/", express.static(__dirname + '/node_modules'));
-
-
+// set default variables
+// create new Twitter object using credentials
 var twitter = new Twitter({
     consumer_key: 'W6HSyXNXsWk9rq3SjNAtlBZuO',
     consumer_secret: 'mGG5ezQ6cNM6wfXQj1w9DGQV5lJzQLVL8Tf1CFpbb31ZQkK4Rv',
@@ -27,19 +17,40 @@ var twitter = new Twitter({
     access_token_secret: 'RZiuaiUPe3U0R7qVsSFAeKQpwV5CNohNFeFCGTsNGlYPz'
 });
 
+// define express as main framework
+var app = express();
+// set port
+app.set('port', port);
+
+// create a server
+const server = http.createServer(app);
+
+// load socket.io
+const io = require('socket.io')(server);
+
+// set view directory
+app.set('views', path.join(__dirname, 'views'));
+
+// configure handlebars
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+// define static paths
+app.use("/static", express.static(__dirname + "/static"));
+app.use("/", express.static(__dirname + '/node_modules'));
+
+// define routes
 // wall
 app.get('/', (req, res) => res.status(200).render('wall'));
-
 // 404
 app.use('*', (req, res) => res.status(200).render('error404'));
 
-
-
+// start twitter streaming api
 var stream = twitter.stream('statuses/filter', {track: '#rstats, #dataviz, #datavis, #DataScience, #tidyverse, #rladies'});
 
+// define socket io
 io.on('connection', function(client) {
     console.log('Client connected...');
-
     client.on('join', function (data) {
         console.log(data);
         stream.on('data', function(event) {
@@ -50,7 +61,7 @@ io.on('connection', function(client) {
             throw error;
         });
     });
-
 });
 
+// start server
 server.listen(port);

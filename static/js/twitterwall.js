@@ -25,7 +25,7 @@ socket.on('tweet', function( tweet ) {
     tweetItem += '<div class="col-4">';
     tweetItem += '<img src="' + tweet.user.profile_image_url + '" class="img-fluid"/>';
     tweetItem += '</div>';
-    tweetItem += '<div class="col-8>';
+    tweetItem += '<div class="col-8">';
     tweetItem += '<p><b>' + tweet.user.screen_name + '</b></p>';
     tweetItem += '<p>' + new Date(tweet.created_at).toLocaleDateString() +  ' ' +  new Date(tweet.created_at).toLocaleTimeString() + '</p>';
     tweetItem += '</div>';

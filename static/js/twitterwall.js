@@ -30,9 +30,11 @@ socket.on('tweet', function( tweet ) {
     else tweetItem += '<h5>' + tweet.text + '</h5>';
     tweetItem += '</div>';
     if (tweet.extended_tweet) {
-        tweetItem += '<div class="col-12">';
-        tweetItem += '<img src="' + tweet.extended_tweet.entities.media[0].media_url + '" class="img-fluid" />';
-        tweetItem += '</div>';
+        if (tweet.extended_tweet.entities.media) {
+            tweetItem += '<div class="col-12">';
+            tweetItem += '<img src="' + tweet.extended_tweet.entities.media[0].media_url + '" class="img-fluid" />';
+            tweetItem += '</div>';
+        }
     }
     tweetItem += '</div>';
     tweetItem += '</div>';

@@ -73,6 +73,10 @@ app.use("/", express.static(__dirname + '/node_modules'));
 var stream = twitter.stream('statuses/filter', {track: '#tidyverse, #rstats, python, javascript -filter:retweets'});
 
 stream.on('data', function(event) {
+
+    var img = null;
+    if ( event.extended_tweet ) img = event.extended_tweet.entities.media[0].media_url;
+
     var tweet = new Tweet({
         id: event.id,
         text: event.text,
@@ -82,7 +86,7 @@ stream.on('data', function(event) {
             name: event.user.name,
             img_url: event.user.profile_image_url_https
         },
-        img_url: event.extended_tweet.entities.media[0].media_url,
+        img_url: img,
         created_at: new Date(event.created_at)
     });
 

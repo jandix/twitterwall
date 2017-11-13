@@ -103,7 +103,7 @@ stream.on('data', function(event) {
 // define routes
 // wall
 app.get('/', function (req, res) {
-    Tweet.find({}, function(err, tweets) {
+    Tweet.find({}).sort('-created_at').exec(function(err, tweets) {
         if (err) throw err;
 
         res.status(200).render('wall', {

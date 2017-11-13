@@ -70,16 +70,25 @@ app.use("/static", express.static(__dirname + "/static"));
 app.use("/", express.static(__dirname + '/node_modules'));
 
 // start twitter streaming api
-var stream = twitter.stream('statuses/filter', {track: '#tidyverse, #rstats, javascript, python'});
+var stream = twitter.stream('statuses/filter', {track: '#tidyverse, #rstats, python, javascript -filter:retweets'});
 
 stream.on('data', function(event) {
     var tweet = new Tweet({
-        text: event.text
+        id: event.id,
+        text: event.text,
+        user: {
+            id: event.user.id,
+            screen_name: event.user.screen_name,
+            name: event.user.name,
+            img_url: event.user.profile_image_url_https
+        },
+        img_url: event.extended_tweet.entities.media[0].media_url,
+        created_at: new Date(event.created_at)
     });
 
     tweet.save(function(err) {
         if (err) throw err;
-        console.log('User saved successfully!');
+        console.log('#' + event.id + ' saved successfully!');
     });
 });
 

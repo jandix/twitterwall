@@ -70,7 +70,7 @@ app.use("/static", express.static(__dirname + "/static"));
 app.use("/", express.static(__dirname + '/node_modules'));
 
 // start twitter streaming api
-var stream = twitter.stream('statuses/filter', {track: '#tidyverse, #rstats, python, javascript'});
+var stream = twitter.stream('statuses/filter', {track: '#WeAreCorrelAid, #wearecorrelaid, @CorrelAid, CorrelAid, correlaid, #meetup_hh, #smarterday'});
 
 stream.on('data', function(event) {
 

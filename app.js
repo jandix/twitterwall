@@ -4,9 +4,25 @@ const express = require('express'); // express framework
 const handlebars = require('express-handlebars'); // handlebar views
 const Twitter = require('twitter'); // twitter api
 const http = require('http'); // http module
+const mongoose = require('mongoose'); // load mongo db module
 
 // set constants
 const port = parseInt(process.env.PORT, 10) || 8080; // set port
+
+
+// set up default mongoose connection
+var mongoDB = 'mongodb://jand:asdliutaisgud672143kjjk21389asdAASF!@ds161455.mlab.com:61455/twitterwall';
+mongoose.connect(mongoDB, {
+    useMongoClient: true
+});
+
+// get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
 
 // set default variables
 // create new Twitter object using credentials

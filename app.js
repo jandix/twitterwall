@@ -69,6 +69,8 @@ app.set('view engine', 'handlebars');
 app.use("/static", express.static(__dirname + "/static"));
 app.use("/", express.static(__dirname + '/node_modules'));
 
+// start twitter streaming api
+var stream = twitter.stream('statuses/filter', {track: '#tidyverse'});
 
 stream.on('data', function(event) {
     var tweet = new Tweet({
@@ -87,8 +89,6 @@ app.get('/', (req, res) => res.status(200).render('wall'));
 // 404
 app.use('*', (req, res) => res.status(200).render('error404'));
 
-// start twitter streaming api
-var stream = twitter.stream('statuses/filter', {track: '#tidyverse'});
 
 // define socket io
 io.on('connection', function(client) {

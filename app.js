@@ -100,7 +100,16 @@ stream.on('data', function(event) {
 
 // define routes
 // wall
-app.get('/', (req, res) => res.status(200).render('wall'));
+app.get('/', function (req, res) {
+    Tweet.find({}, function(err, tweets) {
+        if (err) throw err;
+
+        res.status(200).render('wall', {
+            tweets: tweets
+        })
+    });
+});
+
 // 404
 app.use('*', (req, res) => res.status(200).render('error404'));
 

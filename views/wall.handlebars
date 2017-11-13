@@ -10,7 +10,29 @@
 </div>
 
 <div class="row" id="tweet-wall">
-
+{{#each tweets}}
+    <div class="tweet col-12 col-md-4 text-left">
+        <div class="row">
+            <div class="col-2">
+                <img src="this.user.img_url" class="img-fluid"/>
+            </div>
+            <div class="col-10">
+                <p style="margin: 0;"><b>this.user.screen_name</b></p>
+                <p style="margin:0; margin-top: 2px;">this.created_at</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h5>this.text</h5>
+            </div>
+            {{#if this.img_url}}
+                <div class="col-12">
+                    <img src="this.img_url" class="img-fluid" />
+                </div>
+            {{/if}}
+        </div>
+    </div>
+{{/each}}
 </div>
 
 <script src="/jquery/dist/jquery.js"></script>

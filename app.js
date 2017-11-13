@@ -5,6 +5,7 @@ const handlebars = require('express-handlebars'); // handlebar views
 const Twitter = require('twitter'); // twitter api
 const http = require('http'); // http module
 const mongoose = require('mongoose'); // load mongo db module
+const Schema = mongoose.Schema; // mongoose schema
 
 // set constants
 const port = parseInt(process.env.PORT, 10) || 8080; // set port
@@ -22,7 +23,20 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+var tweetSchema = new Schema({
+    id: String,
+    text: String,
+    user: {
+        id: String,
+        screen_name: String,
+        name: String,
+        img_url: String
+    },
+    img_url: String,
+    created_at: Date
+});
 
+var Tweet = mongoose.model('Tweet', tweetSchema);
 
 // set default variables
 // create new Twitter object using credentials
@@ -55,6 +69,18 @@ app.set('view engine', 'handlebars');
 app.use("/static", express.static(__dirname + "/static"));
 app.use("/", express.static(__dirname + '/node_modules'));
 
+
+stream.on('data', function(event) {
+    var tweet = new Tweet({
+        text: event.text
+    });
+
+    tweet.save(function(err) {
+        if (err) throw err;
+        console.log('User saved successfully!');
+    });
+});
+
 // define routes
 // wall
 app.get('/', (req, res) => res.status(200).render('wall'));
@@ -62,7 +88,7 @@ app.get('/', (req, res) => res.status(200).render('wall'));
 app.use('*', (req, res) => res.status(200).render('error404'));
 
 // start twitter streaming api
-var stream = twitter.stream('statuses/filter', {track: '#rstats, #dataviz, #datavis, #DataScience, #tidyverse, #rladies'});
+var stream = twitter.stream('statuses/filter', {track: '#tidyverse'});
 
 // define socket io
 io.on('connection', function(client) {

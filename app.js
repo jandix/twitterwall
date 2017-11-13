@@ -76,7 +76,9 @@ stream.on('data', function(event) {
 
     if ( !event.retweeted ) {
         var img = null;
-        if (event.extended_tweet) img = event.extended_tweet.entities.media[0].media_url;
+        if (event.extended_tweet) {
+            if (event.extended_tweet.entities) img = event.extended_tweet.entities.media[0].media_url;
+        }
 
         var tweet = new Tweet({
             id: event.id,

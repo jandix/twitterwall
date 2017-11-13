@@ -74,30 +74,28 @@ var stream = twitter.stream('statuses/filter', {track: '#WeAreCorrelAid, #wearec
 
 stream.on('data', function(event) {
 
-    if ( !event.retweeted ) {
-        var img = null;
-        if (event.extended_tweet) {
-            if (event.extended_tweet.entities) img = event.extended_tweet.entities.media[0].media_url;
-        }
-
-        var tweet = new Tweet({
-            id: event.id,
-            text: event.text,
-            user: {
-                id: event.user.id,
-                screen_name: event.user.screen_name,
-                name: event.user.name,
-                img_url: event.user.profile_image_url_https
-            },
-            img_url: img,
-            created_at: new Date(event.created_at)
-        });
-
-        tweet.save(function (err) {
-            if (err) throw err;
-            console.log('#' + event.id + ' saved successfully!');
-        });
+    var img = null;
+    if (event.extended_tweet) {
+        if (event.extended_tweet.entities) img = event.extended_tweet.entities.media[0].media_url;
     }
+
+    var tweet = new Tweet({
+        id: event.id,
+        text: event.text,
+        user: {
+            id: event.user.id,
+            screen_name: event.user.screen_name,
+            name: event.user.name,
+            img_url: event.user.profile_image_url_https
+        },
+        img_url: img,
+        created_at: new Date(event.created_at)
+    });
+
+    tweet.save(function (err) {
+        if (err) throw err;
+        console.log('#' + event.id + ' saved successfully!');
+    });
 });
 
 // define routes
@@ -122,9 +120,7 @@ io.on('connection', function(client) {
     client.on('join', function (data) {
         console.log(data);
         stream.on('data', function(event) {
-            if ( !event.retweeted ) {
-                client.emit('tweet', event);
-            }
+            client.emit('tweet', event);
         });
 
         stream.on('error', function(error) {

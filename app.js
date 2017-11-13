@@ -70,30 +70,32 @@ app.use("/static", express.static(__dirname + "/static"));
 app.use("/", express.static(__dirname + '/node_modules'));
 
 // start twitter streaming api
-var stream = twitter.stream('statuses/filter', {track: '#tidyverse, #rstats, python, javascript -filter:retweets'});
+var stream = twitter.stream('statuses/filter', {track: '#tidyverse, #rstats, python, javascript'});
 
 stream.on('data', function(event) {
 
-    var img = null;
-    if ( event.extended_tweet ) img = event.extended_tweet.entities.media[0].media_url;
+    if ( !event.retweeted ) {
+        var img = null;
+        if (event.extended_tweet) img = event.extended_tweet.entities.media[0].media_url;
 
-    var tweet = new Tweet({
-        id: event.id,
-        text: event.text,
-        user: {
-            id: event.user.id,
-            screen_name: event.user.screen_name,
-            name: event.user.name,
-            img_url: event.user.profile_image_url_https
-        },
-        img_url: img,
-        created_at: new Date(event.created_at)
-    });
+        var tweet = new Tweet({
+            id: event.id,
+            text: event.text,
+            user: {
+                id: event.user.id,
+                screen_name: event.user.screen_name,
+                name: event.user.name,
+                img_url: event.user.profile_image_url_https
+            },
+            img_url: img,
+            created_at: new Date(event.created_at)
+        });
 
-    tweet.save(function(err) {
-        if (err) throw err;
-        console.log('#' + event.id + ' saved successfully!');
-    });
+        tweet.save(function (err) {
+            if (err) throw err;
+            console.log('#' + event.id + ' saved successfully!');
+        });
+    }
 });
 
 // define routes
@@ -109,7 +111,9 @@ io.on('connection', function(client) {
     client.on('join', function (data) {
         console.log(data);
         stream.on('data', function(event) {
-            client.emit('tweet', event);
+            if ( !event.retweeted ) {
+                client.emit('tweet', event);
+            }
         });
 
         stream.on('error', function(error) {

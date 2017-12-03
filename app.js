@@ -12,7 +12,7 @@ const port = parseInt(process.env.PORT, 10) || 8080; // set port
 
 
 // set up default mongoose connection
-var mongoDB = 'mongodb://jand:asdliutaisgud672143kjjk21389asdAASF!@ds161455.mlab.com:61455/twitterwall';
+var mongoDB = '';
 mongoose.connect(mongoDB, {
     useMongoClient: true
 });
@@ -41,10 +41,10 @@ var Tweet = mongoose.model('Tweet', tweetSchema);
 // set default variables
 // create new Twitter object using credentials
 var twitter = new Twitter({
-    consumer_key: 'W6HSyXNXsWk9rq3SjNAtlBZuO',
-    consumer_secret: 'mGG5ezQ6cNM6wfXQj1w9DGQV5lJzQLVL8Tf1CFpbb31ZQkK4Rv',
-    access_token_key: '3372623884-iqa73dotaZgHB7q8twAfIvxHgf0CC211fQcDmKg',
-    access_token_secret: 'RZiuaiUPe3U0R7qVsSFAeKQpwV5CNohNFeFCGTsNGlYPz'
+    consumer_key: '',
+    consumer_secret: '',
+    access_token_key: '',
+    access_token_secret: ''
 });
 
 // define express as main framework
@@ -70,7 +70,7 @@ app.use("/static", express.static(__dirname + "/static"));
 app.use("/", express.static(__dirname + '/node_modules'));
 
 // start twitter streaming api
-var stream = twitter.stream('statuses/filter', {track: '#WeAreCorrelAid, #wearecorrelaid, @CorrelAid, CorrelAid, correlaid, #meetup_hh, #smarterday'});
+var stream = twitter.stream('statuses/filter', {track: '#rstats'});
 
 stream.on('data', function(event) {
 
